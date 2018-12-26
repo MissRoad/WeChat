@@ -1,0 +1,162 @@
+#app
+server:
+    port: 8080
+    context-path: /
+    session:
+      timeout: 120
+#spring
+spring:
+  devtools:
+    restart:
+      enabled: false
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/ruoyi
+    username: root
+    password: p@ssw0rd
+    type: com.zaxxer.hikari.HikariDataSource
+  freemarker:
+    allow-request-override: false
+    allow-session-override: false
+    cache: false
+    charset: UTF-8
+    check-template-location: true
+    content-type: text/html
+    enabled: true
+    expose-request-attributes: false
+    expose-session-attributes: false
+    expose-spring-macro-helpers: true
+    prefer-file-system-access: true
+    # 这是重点， 会过滤.ftl后缀的文件
+    suffix: .ftl
+    # spring boot 默认的页面模板存放目录
+    template-loader-path: classpath:/templates/
+    settings:
+      template_update_delay: 0
+      default_encoding: UTF-8
+      classic_compatible: true
+    order: 1
+
+# 集成redis
+  redis:
+    host: 119.23.255.144
+    password: 123456
+    port: 6379
+    pool:
+      max-idle: 100
+      min-idle: 1
+      max-active: 1000
+      max-wait: -1
+
+ # 邮件服务
+  mail:
+    host: smtp.qq.com
+    username: 1310811431@qq.com
+    password: wgiesntdpywfgjch
+    default-encoding: utf-8
+    port: 587
+  velocity:
+    enabled: false
+
+
+#mybatis
+mybatis-plus:
+  mapper-locations: classpath:/mapper/**/*Mapper.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: com.bing.*
+  global-config:
+    #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
+    id-type: 2
+    #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
+    field-strategy: 2
+    #驼峰下划线转换
+    db-column-underline: true
+    #刷新mapper 调试神器
+    refresh-mapper: true
+    #数据库大写下划线转换
+    #capital-mode: true
+    #序列接口实现类配置
+    #key-generator: com.baomidou.springboot.xxx
+    #逻辑删除配置
+    logic-delete-value: 0
+    logic-not-delete-value: 1
+    #自定义填充策略接口实现
+    #meta-object-handler: com.baomidou.springboot.xxx
+    #自定义SQL注入器
+    #sql-injector: com.baomidou.springboot.xxxo0
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+
+
+ #   端      点                  描   述
+ #   autoconfig              获取自动配置信息
+ #   beans                   获取Spring Bean的基本信息
+ #   configprops             获取配置项信息
+ #   dump                    获取当前线程基本信息
+ #   env                     获取环境变量信息
+ #   bealth                  获取健康检查信息  status 为 UP 当前应用处于运行状态 | diskSpance 表示磁盘空间使用情况
+ #   info                    获取应用基本信息
+ #   metrics                 获取性能指标信息
+ #   mappings                获取请求映射信息
+ #   trace                   获取请求调用信息
+endpoints:
+  #关闭所有端点
+  #enabled: false
+  metrics:
+    #修改 metrics 端点名称
+    #关闭 metrics 端点
+    #id: performance
+    #enabled: false
+  actuator:
+    #禁用 actuator 端点
+    #设置 actuator 端点路径
+    #enabled: false
+    #path: /endpoints/actuator
+  health:
+    #设置 健康检查时 不返回 磁盘信息 默认为false 设置为true后 表示返回的信息具有敏感性
+    sensitive: true
+
+#  健康检查指标类
+#  名   称                                  描  述
+#  ApplicationHealthIndicator         检查应用运行状态(对应 status 部分)
+#  DiskSpaceHealthIndicator           检查磁盘空间(对应 diskSpace 部分)
+#  DataSourceHealthIndicator          检查数据库连接
+#  MailHeanlthIndicator               检查邮件服务器
+#  JmshealthIndicator                 检查JMS代理
+#  RedisHealthIndicator               检查Redis服务器
+#  MongoHealthIndicator               检查MongoDB数据库
+#  CassandraHealthIndicator           检查 Cassandra数据库
+#  RabbitHealthIndicator              检查RabbitMQ服务器
+#  SolrHealthIndicator                检查 Solr 服务器
+#  ElasticearchHealthIndicator        检查ElasticSearch 集群
+
+#  添加相关的Spring Boot 插件后,就可开启对应的健康检查功能,
+#  默认情况下只有Applicationhealthindicator 与 DiskSpaceHealthIndicator 是启用的。
+#  我们还可通过 management.health.defaults.enabled 属性来控制是否开启健康检查特性 默认为 true 表示是开启的
+
+#   还可以自定义健康检查 需实现 org.springframework.boot.actuate.health.HealthIndicator 接口，并覆盖 health（）方法即可
+
+#  可以基于健康检查特性来开发一个微服务系统监控平台,用于获取每个微服务的运行状态与性能指标。
+#  spring-boot-admin 就是一款基于Spring boot 的开源监控平台
+
+
+
+# 应用基本信息 发送/info 请求
+#用来获取Spring Boot的基本信息 程序名称 描述 版本
+#读取 pom 文件信息 利用Maven的资源过滤特性来实现
+info:
+  app:
+    name: @project.name@
+    description: @project.description@
+    version : @project.version@
+
+#微信配置
+wechat:
+    appId: wx4dcd874efb071093
+    secret: fb5a454bd6a5bbaab26d18d9dc24b6c0
+    token: fzq123
+
+
+
+

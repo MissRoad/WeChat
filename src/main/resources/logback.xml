@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<configuration debug="true">
+	<!-- logback的级别顺序 TRACE < DEBUG < INFO < WARN < ERROR -->
+	<!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径 -->
+	<property name="LOG_HOME" value="/opt/myapp/logs/springboot" />
+	<!--定义日志格式化输出格式：%d表示日期，%thread表示线程名，%level：级别从左显示5个字符，%logger{100}输出日志的类，100代表包名加类名的总长度限制，%L：代码中的行号，%msg：日志消息，%n是换行符 -->
+	<!--控制台输出带颜色格式 -->
+	<property name="CONSOLE_LOG_PATTERN"
+			  value="%d{yyyy-MM-dd HH:mm:ss.SSS} | %highlight(%level) | %yellow(%thread) | %boldGreen(%logger{100}) %red(:%L) | %msg%n" />
+	<!--文件日志输出格式 -->
+	<property name="FILE_LOG_PATTERN"
+			  value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread]  %-5level %logger{100}:%L - %msg%n" />
+
+	<!-- 控制台输出 -->
+	<appender name="consoleLog" class="ch.qos.logback.core.ConsoleAppender">
+		<layout name="ch.qos.logback.classic.PatternLayout">
+			<!-- 日志中的输出格式 -->
+			<pattern>${CONSOLE_LOG_PATTERN}</pattern>
+		</layout>
+	</appender>
+
+	<!-- 每天输入一个日志文件 滚动输出 -->
+	<appender name="fileInfoLog"
+			  class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!-- 打印的日志级别 ，过滤掉 TRACE 和 DEBUG 级别的日志 -->
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>INFO</level>
+		</filter>
+		<!-- <onMatch>:用于配置符合过滤条件的操作,我们这里用的符合就抛弃WARN <onMismatch>:用于配置不符合过滤条件的操作，不符合到下一个过滤器ERROR
+			如果返回DENY，那么记录事件立即被抛弃，不再经过剩余过滤器； 如果返回NEUTRAL，那么有序列表里的下一个过滤器会接着处理记录事件； 如果返回ACCEPT，那么记录事件被立即处理，不再经过剩余过滤器。 -->
+		<!-- 过滤掉WARN日志级别 -->
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>WARN</level>
+			<onMatch>DENY</onMatch>
+			<onMismatch>NEUTRAL</onMismatch>
+		</filter>
+		<!-- 过滤掉ERROR日志级别 -->
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>ERROR</level>
+			<onMatch>DENY</onMatch>
+			<onMismatch>ACCEPT</onMismatch>
+		</filter>
+
+		<encoder>
+			<!-- 日志中的输出格式 -->
+			<pattern>${FILE_LOG_PATTERN}</pattern>
+		</encoder>
+		<!--滚动策略 按照时间来滚动 -->
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!--以下文件名修改为自己项目的名字 -->
+			<!-- 文件路径 -->
+			<fileNamePattern>${LOG_HOME}/info.springboot%d{yyyy-MM-dd}.log
+			</fileNamePattern>
+			<!-- 保存时间（天） -->
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+	</appender>
+
+	<!-- 每天输入一个日志文件 滚动输出 -->
+	<appender name="fileErrorLog"
+			  class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>WARN</level>
+		</filter>
+		<encoder>
+			<!-- 日志中的输出格式 -->
+			<pattern>${FILE_LOG_PATTERN}</pattern>
+		</encoder>
+		<!--滚动策略 按照时间来滚动 -->
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!--以下文件名修改为自己项目的名字 -->
+			<!-- 文件路径 -->
+			<fileNamePattern>${LOG_HOME}/error.springboot%d{yyyy-MM-dd}.log
+			</fileNamePattern>
+			<!-- 保存时间（天） -->
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+	</appender>
+
+
+
+	<!-- 如果level没写，继承root的级别 如果没有设置additivity，默认为true，将此logger的打印信息向上级传递； 如果没有设置appender，此loger本身不打印任何信息。 -->
+	<!--设置我们项目文件夹下的日志 -->
+	<logger name="com.lemo" level="DEBUG" />
+
+	<!--log4jdbc -->
+	<!--多余日志关闭 sqlonly是记录系统执行过的sql语句 sqltiming是记录sql执行的时间，可以分析耗时的sql语句（也会显示sql语句，sqlonly可以不显示） 
+		audit是记录除了ResultSet外的所有JDBC调用情况。一般不需要 resultset是记录返回结果集信息 connection记录数据库连接和释放信息，可记录当前的数据库连接数，便于诊断连接是否释放 -->
+	<logger name="jdbc.sqlonly" level="OFF"></logger>
+	<logger name="jdbc.sqltiming" level="INFO" />
+	<logger name="jdbc.audit" level="OFF"></logger>
+	<logger name="jdbc.resultset" level="OFF"></logger>
+	<logger name="jdbc.connection" level="OFF"></logger>
+
+
+	<!-- 级别定义，输出端内容输出级别，大于或等于root定义的level，方能在输出端输出 -->
+	<!--如果想在控制台看DEBUG级别日志改成DEBUG，默认DEBUG，不区分大小写 -->
+	<root level="INFO">
+		<!--只能打印root level当前和以上级别的日志 -->
+		<appender-ref ref="consoleLog" />
+		<!--只能打印INFO级别的日志 -->
+		<appender-ref ref="fileInfoLog" />
+		<!--只能打印WARN和以上级别的日志的日志 -->
+		<appender-ref ref="fileErrorLog" />
+		<!--添加到日志系统 -->
+		<!--<appender-ref ref="dbAppender" />-->
+	</root>
+</configuration>

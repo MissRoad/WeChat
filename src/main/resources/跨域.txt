@@ -1,0 +1,18 @@
+    使用Spring Boot 开发的REST API是相当容易的,一般情况下，REST API 是独立部署的，如果 Web UI 也进行
+独立部署，那么REST API 与 Web UI 可能在不同的域名下部署，从Web UI 发送的AJAX请求去调用 REST API 时就
+会遇到“跨域问题”。在游览器上回报错，因为AJAX 的安全限制，它是不支持跨域的，我们需要通过技术的手段
+来解决这个问题。
+    曾经我们可以用JSONP（JSON with Padding）来解决跨域问题，简单来说就是，客户端发送一个 AJAX 请求，
+并在请求后面加一个callback函数，指向一个JS函数（称为callback 回调函数）。服务端返回一个JavaScript 函
+数，该函数将JSON数据做了一个封装（Padding），就像这样 callback({...})；，这样我们只需要在客户端上定义
+一个callback 回调函数，就能获取从服务端返回的JSON数据了。
+    JSONP 看似简单好用，实际上它也有非常明显的限制：只支持 Get 请求，如果我们需要使用JSONP 技术发送
+其他类型的请求（比如 POST）就不太可能了。当然也可以通过其他手段来实现，比如iframe，但该方案过于繁琐，
+多年前早已弃用。现在，我们优先选择的是更加轻量级的CORS（Cross-Origin Resource Sharing）来实现跨域问题,
+它目前也加入到W3C规范中了，而当前的主流游览器都能很好的支持该规范。
+    Spring Boot 很好地支持了 CORS，我们只需要添加关于 CORS 的端点配置就能随时开启该特性，默认情况下它
+是禁用的，通过以下配置开启：
+                endpoints.cors.allowed-orgigins=http://www.xxx.com
+                endpoints.cors.allowed-methods=GET,POST,PUT,DELETE
+
+                也可以在 类或方法上加上 @CrossOrigin注解来实现跨域 Spring 4.2以后才支持 CORS

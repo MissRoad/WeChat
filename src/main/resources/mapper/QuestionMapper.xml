@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bing.mapper.QuestionMapper">
+     <sql id="questionColumns">
+         a.question_id as questionid,
+         a.question_type as questionType,
+         a.question_title as questionTitle,
+         a.answer1 as answer1,
+         a.answer2 as answer2,
+         a.answer3 as answer3,
+         a.answer_true as answerTrue,
+         a.score as score
+     </sql>
+    
+    
+    <select id="getQuestionList" resultType="com.bing.entity.question.QuestionInfo">
+        select
+        a.question_id as questionid,
+        a.question_title as questionTitle,
+        a.question_type as questionType,
+        a.answer1 as answer1,
+        a.answer2 as answer2,
+        a.answer3 as answer3,
+        b.img_url as imageurl
+        from f_questions a
+        LEFT  JOIN f_questions_img b on a.question_id = b.questions_id
+    </select>
+
+    <select id="selectQuestionIdByType"  resultType="java.lang.String">
+        select
+         a.question_id as questionid
+        from f_questions a  where a.question_type = #{questionType}
+    </select>
+
+    <select id="selectQuestionlistById" resultType="com.bing.entity.question.QuestionInfo" parameterType="java.lang.String">
+        select
+        a.question_id as questionid,
+        a.question_title as questionTitle,
+        a.question_type as questionType,
+        a.answer1 as answer1,
+        a.answer2 as answer2,
+        a.answer3 as answer3,
+        b.img_url as imageurl
+        from f_questions a
+        LEFT  JOIN f_questions_img b on a.question_id = b.questions_id
+        where a.question_id in
+        <foreach collection="questionid" item="item" index="index" open="(" close=")" separator=",">
+             #{item}
+        </foreach>
+    </select>
+</mapper>
