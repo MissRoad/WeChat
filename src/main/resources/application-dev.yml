@@ -11,7 +11,7 @@ spring:
       enabled: false
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/ruoyi
+    url: jdbc:mysql://127.0.0.1:3306/ruoyi?useUnicode=true&characterEncoding=UTF-8
     username: root
     password: p@ssw0rd
     type: com.zaxxer.hikari.HikariDataSource

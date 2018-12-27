@@ -79,7 +79,7 @@
                             data: data,
                             success: function (res) {
                                 if (res.code == 12000) {
-                                    $.toptip('绑定成功', 'success');
+                                    $.toast("绑定成功");
                                 } else {
                                     $.toptip('绑定失败', 'error');
                                 }
