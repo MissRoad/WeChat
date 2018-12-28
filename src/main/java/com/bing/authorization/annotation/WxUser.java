@@ -7,5 +7,8 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
+/**
+ * @see com.bing.authorization.aspect.WxUserAop
+ */
 public @interface WxUser {
 }

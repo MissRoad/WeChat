@@ -1,4 +1,4 @@
-package com.bing.authorization.interceptor;
+package com.bing.authorization.aspect;
 
 import com.bing.authorization.annotation.WxUser;
 import com.bing.constant.Constant;
@@ -34,13 +34,13 @@ public class WxUserAop {
 
     /**
      * Pointcut定义切点
-     * public修饰符的   返回值任意  com.cy.controller包下面的任意类的任意方法任意参数
+     * public修饰符的   返回值任意包下面的任意类的任意方法任意参数
      */
     @Pointcut("execution(public * com.bing.controller.*.*(..))")
-    public void log() {
+    public void getUser() {
     }
 
-    @Before("log()")
+    @Before("getUser()")
     public void doBefore(JoinPoint point) throws WxErrorException, NoSuchMethodException {
         Signature signature = point.getSignature();
         MethodSignature methodSignature = (MethodSignature) signature;

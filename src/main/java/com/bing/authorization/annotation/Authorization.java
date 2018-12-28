@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
  *
  * @author ScienJus
  * @date 2015/7/31.
- * @see com.scienjus.authorization.interceptor.AuthorizationInterceptor
+ * @see com.bing.authorization.annotation.Authorization
  */
 @Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
