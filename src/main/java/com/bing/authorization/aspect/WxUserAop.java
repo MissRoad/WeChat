@@ -4,7 +4,7 @@ import com.bing.authorization.annotation.WxUser;
 import com.bing.constant.Constant;
 import com.bing.response.ResultEnum;
 import com.bing.utils.exception.MyException;
-import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
@@ -41,7 +41,7 @@ public class WxUserAop {
     }
 
     @Before("getUser()")
-    public void doBefore(JoinPoint point) throws WxErrorException, NoSuchMethodException {
+    public void doBefore(JoinPoint point) throws NoSuchMethodException, WxErrorException {
         Signature signature = point.getSignature();
         MethodSignature methodSignature = (MethodSignature) signature;
         Method targetMethod = methodSignature.getMethod();

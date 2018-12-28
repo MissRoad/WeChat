@@ -36,6 +36,10 @@
         <jedis.version>2.9.0</jedis.version>
         <lombok.version>1.16.16</lombok.version>
         <pagehelper-spring-boot-starter.version>1.2.1</pagehelper-spring-boot-starter.version>
+        <weixin.version>3.3.0</weixin.version>
+        <HikariCP.version>2.7.0</HikariCP.version>
+        <freemarker.version>2.3.23</freemarker.version>
+        <aliyun-java-sdk.version>2.1.6</aliyun-java-sdk.version>
     </properties>
     <!--  支持 Web 应用开发，包含 Tomcat 和 spring-mvc。 -->
     <dependencies>
@@ -98,7 +102,7 @@
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
-            <version>2.7.0</version>
+            <version>${HikariCP.version}</version>
         </dependency>
 
         <dependency>
@@ -173,19 +177,6 @@
             </exclusions>
         </dependency>
 
-
-        <dependency>
-            <groupId>cn.jpush.api</groupId>
-            <artifactId>jpush-client</artifactId>
-            <version>3.2.10</version>
-        </dependency>
-
-        <dependency>
-            <groupId>cn.jpush.api</groupId>
-            <artifactId>jiguang-common</artifactId>
-            <version>0.1.3</version>
-        </dependency>
-
         <dependency>
             <groupId>com.aliyun.oss</groupId>
             <artifactId>aliyun-sdk-oss</artifactId>
@@ -205,13 +196,13 @@
         <dependency>
             <groupId>com.aliyun</groupId>
             <artifactId>aliyun-java-sdk-core</artifactId>
-            <version>2.1.7</version>
+            <version>${aliyun-java-sdk.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.aliyun</groupId>
             <artifactId>aliyun-java-sdk-sts</artifactId>
-            <version>2.1.6</version>
+            <version>${aliyun-java-sdk.version}</version>
         </dependency>
 
         <!--springboot中修改完文件后自动reload的插件，修改完文件Ctrl + F9 Make一下就可以-->
@@ -220,37 +211,6 @@
             <artifactId>springloaded</artifactId>
             <version>1.2.3.RELEASE</version>
         </dependency>
-
-        <!-- swagger2生成Restful Api接口文档 -->
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>2.7.0</version>
-        </dependency>
-
-        <!--
-          界面
-         springfox-swagger-ui -> /swagger-ui.html
-         swagger-bootstrap-ui -> /doc.html
-         swagger-ui-layer ->    /docs.html
-        -->
-        <!--<dependency>-->
-        <!--<groupId>io.springfox</groupId>-->
-        <!--<artifactId>springfox-swagger-ui</artifactId>-->
-        <!--<version>2.7.0</version>-->
-        <!--</dependency>-->
-
-        <dependency>
-            <groupId>com.github.xiaoymin</groupId>
-            <artifactId>swagger-bootstrap-ui</artifactId>
-            <version>1.6</version>
-        </dependency>
-
-        <!--<dependency>-->
-        <!--<groupId>com.github.caspar-chen</groupId>-->
-        <!--<artifactId>swagger-ui-layer</artifactId>-->
-        <!--<version>0.0.2</version>-->
-        <!--</dependency>-->
 
         <!-- 端点生产级特性 -->
         <dependency>
@@ -280,45 +240,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-actuator-docs</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.freemarker</groupId>
             <artifactId>freemarker</artifactId>
-            <version>2.3.23</version>
+            <version>${freemarker.version}</version>
         </dependency>
-
-        <!--
-            允许通过 ssh远程连接正在运行中的 Spring Boot 应用程序
-            启动Spring Boot 的时候 会随机生成ssh密码，Spring Boot应用程序启动后，
-            将在默认端口号（2000）开启 ssh 服务，我们可以用默认用户 user 与以上随机密码 ssh命令 登录
-            $ ssh -p 2000 user@127.0.0.1
-
-            输入 help 命令查看插件所提供的相关命令
-
-            使用autoconfig 查看自动配置
-            使用 beans 查看相关 Spring Bean
-            通过endpoint 命令调用指定的端点
-            使用 env 查看环境变量
-            使用 jvm 查看相关信息
-            使用 metrics 命令查看性能指标等
-            使用 dashboard 通过工作台的方式查看相关数据
-
-            修改默认的 ssh端口号,用户名，密码 在applicattion.properties文件配置
-            shell.ssh.port=12000
-            shell.auth.simple.user.name=admin
-            shell.auth.simple.user.password=123456
-        -->
-        <!--<dependency>-->
-        <!--<groupId>org.springframework.boot</groupId>-->
-        <!--<artifactId>spring-boot-starter-remote-shell</artifactId>-->
-        <!--</dependency>-->
-
-        <!--
-          开启 telnet 连接
-        -->
-        <!--<dependency>-->
-        <!--<groupId>org.telnet</groupId>-->
-        <!--<artifactId>crsh.shell.telnet</artifactId>-->
-        <!--</dependency>-->
 
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -331,13 +258,6 @@
             <artifactId>spring-boot-starter-logging</artifactId>
         </dependency>
 
-        <!--shiro权限-->
-        <dependency>
-            <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-spring</artifactId>
-            <version>1.4.0</version>
-        </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -348,26 +268,18 @@
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
 
-
-        <dependency>
-            <groupId>net.sourceforge.nekohtml</groupId>
-            <artifactId>nekohtml</artifactId>
-            <version>1.9.22</version>
-        </dependency>
-
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
-            <version>2.9.0</version>
         </dependency>
-
 
         <!--java微信开发-->
         <dependency>
             <groupId>com.github.binarywang</groupId>
             <artifactId>weixin-java-mp</artifactId>
-            <version>2.9.0</version>
+            <version>${weixin.version}</version>
         </dependency>
+
         <!--Email-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -378,14 +290,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-velocity</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>3.1.0</version>
-            <scope>provided</scope>
-        </dependency>
-
 
         <!--pagehelper-->
         <dependency>

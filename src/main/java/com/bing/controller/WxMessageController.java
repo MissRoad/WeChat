@@ -1,7 +1,14 @@
 package com.bing.controller;
 
+import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.bean.WxMpMassOpenIdsMessage;
+import me.chanjar.weixin.mp.bean.WxMpMassTagMessage;
 import me.chanjar.weixin.mp.bean.kefu.WxMpKefuMessage;
+import me.chanjar.weixin.mp.bean.result.WxMpCurrentAutoReplyInfo;
+import me.chanjar.weixin.mp.bean.result.WxMpMassSendResult;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplateData;
+import me.chanjar.weixin.mp.bean.template.WxMpTemplateIndustry;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplateMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,15 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
-
-
-import me.chanjar.weixin.common.exception.WxErrorException;
-import me.chanjar.weixin.mp.api.WxMpService;
-import me.chanjar.weixin.mp.bean.WxMpMassOpenIdsMessage;
-import me.chanjar.weixin.mp.bean.WxMpMassTagMessage;
-import me.chanjar.weixin.mp.bean.result.WxMpCurrentAutoReplyInfo;
-import me.chanjar.weixin.mp.bean.result.WxMpMassSendResult;
-import me.chanjar.weixin.mp.bean.template.WxMpTemplateIndustry;
 
 /**
  * 消息发送
@@ -111,7 +109,7 @@ public class WxMessageController {
     public String templeMessage(String templateId, String openId) throws WxErrorException {
         WxMpTemplateMessage templateMessage = WxMpTemplateMessage.builder().templateId(templateId)
                 .toUser(openId).build();
-        templateMessage.addWxMpTemplateData(new WxMpTemplateData("通知","你有新的通知！","#FFFFFF"));
+        templateMessage.addData(new WxMpTemplateData("通知","你有新的通知！","#FFFFFF"));
         return wxMpService.getTemplateMsgService().sendTemplateMsg(templateMessage);
     }
 }

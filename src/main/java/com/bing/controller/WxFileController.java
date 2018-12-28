@@ -1,7 +1,12 @@
 package com.bing.controller;
 
 import com.google.common.collect.Lists;
-
+import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.bean.material.WxMpMaterial;
+import me.chanjar.weixin.mp.bean.material.WxMpMaterialCountResult;
+import me.chanjar.weixin.mp.bean.material.WxMpMaterialNews;
+import me.chanjar.weixin.mp.bean.material.WxMpMaterialUploadResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,13 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.File;
 import java.util.Date;
 import java.util.List;
-
-import me.chanjar.weixin.common.exception.WxErrorException;
-import me.chanjar.weixin.mp.api.WxMpService;
-import me.chanjar.weixin.mp.bean.material.WxMpMaterial;
-import me.chanjar.weixin.mp.bean.material.WxMpMaterialCountResult;
-import me.chanjar.weixin.mp.bean.material.WxMpMaterialNews;
-import me.chanjar.weixin.mp.bean.material.WxMpMaterialUploadResult;
 
 /**
  * 上传素材
@@ -79,7 +77,7 @@ public class WxFileController {
         WxMpMaterialNews news = new WxMpMaterialNews();
         news.setArticles(articles);
         Date date = new Date();
-        news.setCreatedTime(date);
+        news.setCreateTime(date);
         WxMpMaterialUploadResult wx = this.wxMpService.getMaterialService().materialNewsUpload(news);
         return wx;
     }
