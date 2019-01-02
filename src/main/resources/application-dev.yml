@@ -157,6 +157,15 @@ wechat:
     secret: fb5a454bd6a5bbaab26d18d9dc24b6c0
     token: fzq123
 
+apache:
+  rocketmq:
+# 消费者的组名
+    PushConsumer: PushConsumer
+#生产者组名
+    producerGroup: Producer
+#nameServer地址
+    namesrvAddr: localhost:9876
+
 
 
 

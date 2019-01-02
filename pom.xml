@@ -40,6 +40,7 @@
         <HikariCP.version>2.7.0</HikariCP.version>
         <freemarker.version>2.3.23</freemarker.version>
         <aliyun-java-sdk.version>2.1.6</aliyun-java-sdk.version>
+        <version.rocketmq>4.3.2</version.rocketmq>
     </properties>
     <!--  支持 Web 应用开发，包含 Tomcat 和 spring-mvc。 -->
     <dependencies>
@@ -296,6 +297,19 @@
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper-spring-boot-starter</artifactId>
             <version>${pagehelper-spring-boot-starter.version}</version>
+        </dependency>
+
+        <!--rocketmq-->
+        <dependency>
+            <groupId>org.apache.rocketmq</groupId>
+            <artifactId>rocketmq-client</artifactId>
+            <version>${version.rocketmq}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.rocketmq</groupId>
+            <artifactId>rocketmq-common</artifactId>
+            <version>${version.rocketmq}</version>
         </dependency>
 
     </dependencies>
