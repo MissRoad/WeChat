@@ -1,8 +1,7 @@
 package com.bing;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.support.SpringBootServletInitializer;
-
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 /**
  * @author fzq
  * @create 2018-06-05 20:12

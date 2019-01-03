@@ -20,7 +20,7 @@ public class RocketMQClient {
     @Autowired
     private RocketmqConfig rocketmqConfig;
 
-    @PostConstruct
+//    @PostConstruct
     public void defaultMQProducer() {
         //生产者组名
         DefaultMQProducer producer = new DefaultMQProducer(rocketmqConfig.getProducerGroup());
