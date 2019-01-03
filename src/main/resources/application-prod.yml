@@ -1,10 +1,10 @@
 #app
 server:
-    port: 8080
-    context-path: /
+  port: 8080
+  servlet:
+    context-path:
     session:
-      timeout: 60
-
+      timeout: 120
 #spring
 spring:
   devtools:
@@ -12,9 +12,9 @@ spring:
       enabled: false
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://47.94.161.170:3306/leasecore
-    username: leasecore
-    password: leasecore
+    url: jdbc:mysql://127.0.0.1:3306/ruoyi?useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: p@ssw0rd
     type: com.zaxxer.hikari.HikariDataSource
   freemarker:
     allow-request-override: false
@@ -37,23 +37,36 @@ spring:
       default_encoding: UTF-8
       classic_compatible: true
     order: 1
+
+  # 集成redis
   redis:
-    host: 123456
+    host: 119.23.255.144
     password: 123456
-    port: 9365
-    pool:
-      max-idle: 100
-      min-idle: 1
-      max-active: 1000
-      max-wait: -1
-#AOP
-#  aop:
-#    proxy-target-class: true
+    port: 6379
+    jedis:
+      pool:
+        max-wait: -1
+        min-idle: 1
+        max-idle: 100
+        max-active: 1000
+
+
+  # 邮件服务
+  mail:
+    host: smtp.qq.com
+    username: 1310811431@qq.com
+    password: wgiesntdpywfgjch
+    default-encoding: utf-8
+    port: 587
+  velocity:
+    enabled: false
+
+
 #mybatis
 mybatis-plus:
-  mapper-locations: classpath:/mapper/*Mapper.xml
+  mapper-locations: classpath:/mapper/**/*Mapper.xml
   #实体扫描，多个package用逗号或者分号分隔
-  typeAliasesPackage: com.leimo.entity
+  typeAliasesPackage: com.bing.*
   global-config:
     #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
     id-type: 2
@@ -79,33 +92,30 @@ mybatis-plus:
     cache-enabled: false
 
 
- #   端      点                  描   述
- #   autoconfig              获取自动配置信息
- #   beans                   获取Spring Bean的基本信息
- #   configprops             获取配置项信息
- #   dump                    获取当前线程基本信息
- #   env                     获取环境变量信息
- #   bealth                  获取健康检查信息  status 为 UP 当前应用处于运行状态 | diskSpance 表示磁盘空间使用情况
- #   info                    获取应用基本信息
- #   metrics                 获取性能指标信息
- #   mappings                获取请求映射信息
- #   trace                   获取请求调用信息
+  #   端      点                  描   述
+  #   autoconfig              获取自动配置信息
+  #   beans                   获取Spring Bean的基本信息
+  #   configprops             获取配置项信息
+  #   dump                    获取当前线程基本信息
+  #   env                     获取环境变量信息
+  #   bealth                  获取健康检查信息  status 为 UP 当前应用处于运行状态 | diskSpance 表示磁盘空间使用情况
+  #   info                    获取应用基本信息
+  #   metrics                 获取性能指标信息
+  #   mappings                获取请求映射信息
+  #   trace                   获取请求调用信息
 endpoints:
   #关闭所有端点
   #enabled: false
   metrics:
-    #修改 metrics 端点名称
-    #关闭 metrics 端点
-    #id: performance
-    #enabled: false
+  #修改 metrics 端点名称
+  #关闭 metrics 端点
+  #id: performance
+  #enabled: false
   actuator:
-    #禁用 actuator 端点
-    #设置 actuator 端点路径
-    #enabled: false
-    #path: /endpoints/actuator
-  health:
-    #设置 健康检查时 不返回 磁盘信息 默认为false 设置为true后 表示返回的信息具有敏感性
-    sensitive: true
+  #禁用 actuator 端点
+  #设置 actuator 端点路径
+  #enabled: false
+  #path: /endpoints/actuator
 
 #  健康检查指标类
 #  名   称                                  描  述
@@ -140,3 +150,22 @@ info:
     name: @project.name@
     description: @project.description@
     version : @project.version@
+
+#微信配置
+wechat:
+  appId: wx4dcd874efb071093
+  secret: fb5a454bd6a5bbaab26d18d9dc24b6c0
+  token: fzq123
+
+apache:
+  rocketmq:
+    # 消费者的组名
+    PushConsumer: PushConsumer
+    #生产者组名
+    producerGroup: Producer
+    #nameServer地址
+    namesrvAddr: localhost:9876
+
+
+
+

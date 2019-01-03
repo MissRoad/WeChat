@@ -1,9 +1,10 @@
 #app
 server:
     port: 8080
-    context-path: /
-    session:
-      timeout: 120
+    servlet:
+      context-path:
+      session:
+        timeout: 120
 #spring
 spring:
   devtools:
@@ -42,11 +43,13 @@ spring:
     host: 119.23.255.144
     password: 123456
     port: 6379
-    pool:
-      max-idle: 100
-      min-idle: 1
-      max-active: 1000
-      max-wait: -1
+    jedis:
+      pool:
+        max-wait: -1
+        min-idle: 1
+        max-idle: 100
+        max-active: 1000
+
 
  # 邮件服务
   mail:
@@ -113,9 +116,6 @@ endpoints:
     #设置 actuator 端点路径
     #enabled: false
     #path: /endpoints/actuator
-  health:
-    #设置 健康检查时 不返回 磁盘信息 默认为false 设置为true后 表示返回的信息具有敏感性
-    sensitive: true
 
 #  健康检查指标类
 #  名   称                                  描  述
