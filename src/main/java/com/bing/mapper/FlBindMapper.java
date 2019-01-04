@@ -50,4 +50,11 @@ public interface FlBindMapper {
      * @mbggenerated
      */
     int updateByPrimaryKey(FlBind record);
+
+    /**
+     * 根据员工id获取员工绑定的openid
+     * @param userCode
+     * @return
+     */
+    FlBind selectOpenIdByUid(String userCode);
 }

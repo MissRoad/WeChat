@@ -133,4 +133,8 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectOpenIdByUid" resultMap="BaseResultMap">
+    select openid from fl_bind where fl_user_code=#{userCode} limit 1
+  </select>
 </mapper>

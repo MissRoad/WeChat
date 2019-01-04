@@ -1,5 +1,8 @@
 package com.bing.controller;
 
+import com.bing.entity.FlBind;
+import com.bing.mapper.FlBindMapper;
+import com.bing.response.Result;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.WxMpMassOpenIdsMessage;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 消息发送
@@ -30,6 +34,10 @@ import java.util.List;
 public class WxMessageController {
     @Autowired
     private WxMpService wxMpService;
+
+    @Autowired
+    private FlBindMapper flBindMapper;
+
 
     /**
      * @Description 群发消息
@@ -69,11 +77,6 @@ public class WxMessageController {
         return messageSend;
     }
 
-    public String templateMsg() {
-        WxMpTemplateIndustry wxMpTemplateIndustry = new WxMpTemplateIndustry();
-        return "";
-    }
-
     /**
      * @Description 获取公众号的自动回复规则
      * @Author fzq
@@ -109,7 +112,28 @@ public class WxMessageController {
     public String templeMessage(String templateId, String openId) throws WxErrorException {
         WxMpTemplateMessage templateMessage = WxMpTemplateMessage.builder().templateId(templateId)
                 .toUser(openId).build();
-        templateMessage.addData(new WxMpTemplateData("通知","你有新的通知！","#FFFFFF"));
+        templateMessage.addData(new WxMpTemplateData("通知", "你有新的通知！", "#FFFFFF"));
         return wxMpService.getTemplateMsgService().sendTemplateMsg(templateMessage);
     }
+
+    /**
+     * 发送flowlites客服消息
+     *
+     * @return
+     */
+    @GetMapping("/flMessage")
+    public Result flMessage(String content, String userCode) throws WxErrorException {
+        Result result = Result.FAIL;
+        FlBind flBind = flBindMapper.selectOpenIdByUid(userCode);
+        String openId;
+        if (Objects.nonNull(flBind)) {
+            openId = flBind.getOpenid();
+            WxMpKefuMessage message = WxMpKefuMessage.TEXT().
+                    toUser(openId).content(content).build();
+            boolean flag = wxMpService.getKefuService().sendKefuMessage(message);
+            result = flag ? Result.SUCCESS : Result.FAIL;
+        }
+        return result;
+    }
+
 }
